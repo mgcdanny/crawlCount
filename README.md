@@ -2,6 +2,6 @@
 
 To get nltk_data:
 
-mkdir crawlCount/nltk_data
+mkdir ./nltk_data
 
-sudo python -m nltk.downloader -d crawlCount/nltk_data
+python -m nltk.downloader -d ./nltk_data all
