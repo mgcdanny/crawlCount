@@ -5,6 +5,7 @@ import re
 from collections import Counter
 from urllib.parse import urljoin
 from collections import Counter
+from selenium import webdriver
 
 
 """
@@ -26,6 +27,7 @@ def crawl_main(url):
         if more_text:
             text = text + ' ' + more_text
     words = get_words(text)
+    data['word_freq'] = words
     if words:
         data['word_freq'] = Counter(words)
     return data
@@ -36,8 +38,9 @@ def get_words(text):
     nltk.data.path.append('../nltk_data/')  # set the path
     tokens = nltk.word_tokenize(text)
     text = nltk.Text(tokens)
+    #TODO: make better punctuation stripper
     nonPunct = re.compile('.*[A-Za-z].*')
-    words = [w for w in text if nonPunct.match(w)]
+    words = [w.lower() for w in text if nonPunct.match(w)]
     return words
 
 
@@ -91,7 +94,7 @@ def crawl_main(url):
 
 
 def get_words(html):
-    """Take a string of raw html and return a list of words"""
+    
     soup = BeautifulSoup(html)
     # kill all script and style elements
     for script in soup(["script", "style"]):
@@ -107,7 +110,7 @@ def get_words(html):
 
 
 def get_relevant_links(html, base_url):
-    """Take raw html and parse out other links that are like 'faw' or 'about'"""
+    
     link_finder = re.compile('faq|about|blog', re.IGNORECASE)
     relevant_links = []
     for link in BeautifulSoup(html).find_all('a'):

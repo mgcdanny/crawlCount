@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="WordcountApp">
+<!-- 'raw' is a hack to allow for flask server side jinja2 template languate -->
+  {% raw %}
   <head>
     <title>Wordcount</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,21 +14,29 @@
     </style>
   </head>
   <body ng-controller="WordcountController">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-5 col-sm-offset-1">
+        <div class="text-center col-lg-12">
           <h1>Wordcount 3000</h1>
           <br>
           <form role="form" ng-submit="getResults()">
             <div class="form-group">
-              <input type="text" name="url" class="form-control" id="url-box" placeholder="Enter URL..." style="max-width: 300px;" ng-model="input_url" required>
+              <input type="text" name="url" class="form-control center-block" id="url-box" placeholder="Enter URL..." style="max-width: 300px;" ng-model="input_url" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
           <br>
           <p>Enter a URL to check the number of words used inside the body of the web page.</p>
         </div>
-        <div class="col-sm-5 col-sm-offset-1">
+      </div>
+     </div>
+     <br>
+     <div class="container"> 
+      <div class="row">
+        <div ng-if="{{screen_shot}}" class="col-sm-7 col-sm-offset-1">
+          <img ng-src="data:image/JPEG;base64,{{screen_shot}}" class="img-responsive" alt="Responsive image">
+        </div>
+        <div class="col-sm-3 col-sm-offset-1">
           <h2>Frequencies</h2>
           <br>
           <div id="results">
@@ -38,16 +48,17 @@
                 </tr>
               </thead>
               <tbody>
-              {% raw %}
                 <tr ng-repeat="val in wordcounts | orderBy:sortField:reverse">
                   <td>{{val.word}}</td>
                   <td>{{val.count}}</td>
                 </tr>
-            {% endraw %}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
+    {% endraw %}
     <br><br>
     <!-- scripts -->
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
