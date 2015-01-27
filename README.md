@@ -1,4 +1,4 @@
-
+Anaconda 3.4 (full install) plus:
 
 To get nltk_data:
 
