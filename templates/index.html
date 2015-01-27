@@ -8,9 +8,9 @@
     <!-- styles -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <style>
-      .container {
+/*      .container {
         max-width: 1000px;
-      }
+      }*/
     </style>
   </head>
   <body ng-controller="WordcountController">
@@ -21,7 +21,7 @@
           <br>
           <form role="form" ng-submit="getResults()">
             <div class="form-group">
-              <input type="text" name="url" class="form-control center-block" id="url-box" placeholder="Enter URL..." style="max-width: 300px;" ng-model="input_url" required>
+              <input type="text" name="url" class="form-control center-block" id="url-box" placeholder="Enter URL..." style="max-width: 600px;" ng-model="input_url" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
@@ -31,12 +31,12 @@
       </div>
      </div>
      <br>
-     <div class="container"> 
+     <div class="container-fluid"> 
       <div class="row">
-        <div ng-if="{{screen_shot}}" class="col-sm-7 col-sm-offset-1">
+        <div class="col-sm-7">
           <img ng-src="data:image/JPEG;base64,{{screen_shot}}" class="img-responsive" alt="Responsive image">
         </div>
-        <div class="col-sm-3 col-sm-offset-1">
+        <div class="col-sm-3">
           <h2>Frequencies</h2>
           <br>
           <div id="results">

@@ -31,12 +31,12 @@ def get_counts():
     data = request.json
     url = data["url"]
     # form URL, id necessary
-    if 'http://' not in url[:7]:
+    if 'http://' not in url[:7] and 'https://' not in url[:8]:
         url = 'http://' + url
     data = crawl_main(url)
     return jsonify(data)
  
- 
+
 if __name__ == '__main__':
     app.run(debug=True)
 
