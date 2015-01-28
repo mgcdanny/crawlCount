@@ -2,4 +2,6 @@
 *ipynb
 *.pyc
 
+data/*
+
 nltk_data/*

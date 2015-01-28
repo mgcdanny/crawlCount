@@ -1,10 +1,8 @@
-import requests
-import nltk 
+import nltk
 from bs4 import BeautifulSoup
 import re
 from collections import Counter
 from urllib.parse import urljoin
-from collections import Counter
 from selenium import webdriver
 
 
@@ -20,8 +18,7 @@ def crawl_main(url):
     data = {'url_orig': url, 'current_url': None, 'screen_shot': None, 'html': None, 'word_freq': None}
     words = []
     text = ''
-    freq = None
-    text, links, data['url_crawl'], data['screen_shot'], data['html'] = crawl(url)
+    text, links, data['current_url'], data['screen_shot'], data['html'] = crawl(url)
     for link in links:
         more_text, _, _, _, _ = crawl(link)
         if more_text:
@@ -35,7 +32,7 @@ def crawl_main(url):
 
 def get_words(text):
     """Take a string of raw html and return a list of words"""
-    nltk.data.path.append('../nltk_data/')  # set the path
+    # nltk.data.path.append('../nltk_data/')  # set the path
     tokens = nltk.word_tokenize(text)
     text = nltk.Text(tokens)
     #TODO: make better punctuation stripper
@@ -60,7 +57,7 @@ def crawl(url):
     link_finder = re.compile('faq|about|blog', re.IGNORECASE)
     domain_not_found = re.compile('.?domain.?not.?found', re.IGNORECASE)
     driver = webdriver.PhantomJS()
-    driver.set_window_size(1200,1200)
+    driver.set_window_size(1200, 1200)
     driver.get(url)
     if domain_not_found.search(driver.current_url):
         #TODO: perhaps dont' fail so silently... return error message
@@ -73,9 +70,9 @@ def crawl(url):
                 links.append(href)
     current_url = driver.current_url
     screen_shot = driver.get_screenshot_as_base64()
-    html= driver.page_source
+    html = driver.page_source
     driver.quit()
-    return text, links, current_url, screen_shot, html 
+    return text, links, current_url, screen_shot, html
     #return requests.get(url).text
 
 """
