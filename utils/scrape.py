@@ -15,7 +15,14 @@ fh.close()
 
 
 def crawl_main(url):
-    data = {'url_orig': url, 'current_url': None, 'screen_shot': None, 'html': None, 'word_freq': None}
+    data = {
+        'url_orig': url,
+        'current_url': None,
+        'screen_shot': None,
+        'html': None,
+        'word_freq': None,
+        'words': None
+    }
     words = []
     text = ''
     text, links, data['current_url'], data['screen_shot'], data['html'] = crawl(url)
@@ -24,7 +31,7 @@ def crawl_main(url):
         if more_text:
             text = text + ' ' + more_text
     words = get_words(text)
-    data['word_freq'] = words
+    data['words'] = words
     if words:
         data['word_freq'] = Counter(words)
     return data
@@ -61,6 +68,7 @@ def crawl(url):
     driver.get(url)
     if domain_not_found.search(driver.current_url):
         #TODO: perhaps dont' fail so silently... return error message
+        driver.quit()
         return text, links, None, None, None
     text = driver.find_element_by_xpath("//html").text
     for a in driver.find_elements_by_tag_name('a'):
